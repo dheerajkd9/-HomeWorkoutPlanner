@@ -1,4 +1,4 @@
-import Link from 'next/link';
+ï»¿import Link from 'next/link';
 import { categories, stores } from '../lib/data';
 import { FiltersSidebar } from '../components/FiltersSidebar';
 import { MarketShell } from '../components/MarketShell';
@@ -38,7 +38,7 @@ export default function HomePage() {
                   <div className="store-meta">
                     <span>{store.hours}</span>
                     <span>{store.area}</span>
-                    <span>{store.specialties.join(' • ')}</span>
+                    <span>{store.specialties.join(' | ')}</span>
                   </div>
                   <div className="store-badges">
                     <span>{store.freshnessNote}</span>
