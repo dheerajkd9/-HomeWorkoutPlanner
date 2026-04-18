@@ -1,4 +1,4 @@
-import Link from 'next/link';
+ï»¿import Link from 'next/link';
 import { notFound } from 'next/navigation';
 import { getStoreBySlug } from '../../../lib/data';
 import { MarketShell } from '../../../components/MarketShell';
@@ -24,7 +24,9 @@ export default function StorePage({ params }: { params: { slug: string } }) {
           </div>
           <div className="hero-sidecard">
             <p className="mini-label">Delivery windows</p>
-            {store.deliveryWindows.map((window) => (<strong key={window}>{window}</strong>))}
+            {store.deliveryWindows.map((window) => (
+              <strong key={window}>{window}</strong>
+            ))}
           </div>
         </section>
 
@@ -35,7 +37,9 @@ export default function StorePage({ params }: { params: { slug: string } }) {
                 <p className="eyebrow">Products</p>
                 <h2>Order with exact cutting instructions</h2>
               </div>
-              <Link href={store.mapUrl} target="_blank" className="secondary-link">Open maps</Link>
+              <Link href={store.mapUrl} target="_blank" className="secondary-link">
+                Open maps
+              </Link>
             </div>
             <div className="product-list">
               {store.products.map((product) => (
@@ -43,7 +47,11 @@ export default function StorePage({ params }: { params: { slug: string } }) {
                   <div>
                     <h3>{product.name}</h3>
                     <p>{product.notes || 'Cut instructions available at checkout.'}</p>
-                    <div className="cut-list">{product.cuts.map((cut) => (<span key={cut}>{cut}</span>))}</div>
+                    <div className="cut-list">
+                      {product.cuts.map((cut) => (
+                        <span key={cut}>{cut}</span>
+                      ))}
+                    </div>
                   </div>
                   <div className="product-price">
                     <strong>INR {product.price}</strong>
@@ -59,7 +67,11 @@ export default function StorePage({ params }: { params: { slug: string } }) {
             <section>
               <p className="eyebrow">Coverage</p>
               <h3>Service area</h3>
-              <ul>{store.serviceArea.map((area) => (<li key={area}>{area}</li>))}</ul>
+              <ul>
+                {store.serviceArea.map((area) => (
+                  <li key={area}>{area}</li>
+                ))}
+              </ul>
             </section>
             <section>
               <p className="eyebrow">Bulk</p>
@@ -70,7 +82,12 @@ export default function StorePage({ params }: { params: { slug: string } }) {
               <p className="eyebrow">Reviews</p>
               <div className="review-stack">
                 {store.reviewsList.map((review) => (
-                  <blockquote key={review.id}>“{review.quote}”<footer>{review.author} • {review.rating}/5</footer></blockquote>
+                  <blockquote key={review.id}>
+                    "{review.quote}"
+                    <footer>
+                      {review.author} - {review.rating}/5
+                    </footer>
+                  </blockquote>
                 ))}
               </div>
             </section>
