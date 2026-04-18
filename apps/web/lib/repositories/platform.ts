@@ -39,35 +39,61 @@ function calculateTotal(items: OrderInsert['items']) {
   return items.reduce((sum, item) => sum + item.quantity * item.unitPrice, 0);
 }
 
+function fallbackStores(category?: string, area?: string) {
+  return stores.filter(
+    (store) =>
+      (!area || area === 'All Hyderabad' || store.area === area) &&
+      (!category || store.prices.some((price) => price.categorySlug === category)),
+  );
+}
+
 export async function listStores(category?: string, area?: string) {
   const supabase = createSupabaseAdminClient();
   if (!supabase) {
-    return stores.filter((store) => (!area || area === 'All Hyderabad' || store.area === area) && (!category || store.prices.some((price) => price.categorySlug === category)));
+    return fallbackStores(category, area);
   }
 
-  let query = supabase
-    .from('store_market_view')
-    .select('*')
-    .order('avg_rating', { ascending: false })
-    .limit(100);
+  try {
+    let query = supabase
+      .from('stores')
+      .select('*')
+      .eq('is_active', true)
+      .order('avg_rating', { ascending: false })
+      .limit(100);
 
-  if (area && area !== 'All Hyderabad') query = query.eq('area', area);
-  if (category) query = query.eq('category_slug', category);
+    if (area && area !== 'All Hyderabad') query = query.eq('area', area);
 
-  const { data, error } = await query;
-  if (error) throw error;
-  return data ?? [];
+    const { data, error } = await query;
+    if (error || !data || data.length === 0) {
+      return fallbackStores(category, area);
+    }
+
+    return fallbackStores(category, area).map((fallback) => {
+      const dbStore = data.find((item) => item.slug === fallback.slug || item.name === fallback.name || item.area === fallback.area);
+      return dbStore ? { ...fallback, ...dbStore } : fallback;
+    });
+  } catch {
+    return fallbackStores(category, area);
+  }
 }
 
 export async function getStore(slug: string) {
   const supabase = createSupabaseAdminClient();
+  const fallback = storeDetails.find((store) => store.slug === slug) ?? null;
+
   if (!supabase) {
-    return storeDetails.find((store) => store.slug === slug) ?? null;
+    return fallback;
   }
 
-  const { data, error } = await supabase.from('store_detail_view').select('*').eq('slug', slug).maybeSingle();
-  if (error) throw error;
-  return data;
+  try {
+    const { data, error } = await supabase.from('stores').select('*').eq('slug', slug).maybeSingle();
+    if (error || !data) {
+      return fallback;
+    }
+    return { ...fallback, ...data };
+  } catch {
+    return fallback;
+  }
 }
 
 export async function createOrder(input: OrderInsert) {
@@ -128,13 +154,17 @@ export async function listOrders(scope: { customerUserId?: string; storeId?: str
     return [];
   }
 
-  let query = supabase.from('orders').select('*, order_items(*)').order('created_at', { ascending: false }).limit(100);
-  if (scope.customerUserId) query = query.eq('customer_user_id', scope.customerUserId);
-  if (scope.storeId) query = query.eq('store_id', scope.storeId);
+  try {
+    let query = supabase.from('orders').select('*, order_items(*)').order('created_at', { ascending: false }).limit(100);
+    if (scope.customerUserId) query = query.eq('customer_user_id', scope.customerUserId);
+    if (scope.storeId) query = query.eq('store_id', scope.storeId);
 
-  const { data, error } = await query;
-  if (error) throw error;
-  return data ?? [];
+    const { data, error } = await query;
+    if (error) return [];
+    return data ?? [];
+  } catch {
+    return [];
+  }
 }
 
 export async function updateOrderStatus(orderId: string, status: string, actorUserId: string) {
@@ -161,14 +191,17 @@ export async function upsertInventory(input: InventoryUpdate) {
 
   const { data, error } = await supabase
     .from('inventory_snapshots')
-    .upsert({
-      branch_id: input.branchId,
-      product_id: input.productId,
-      stock_status: input.stockStatus,
-      available_quantity: input.availableQuantity ?? null,
-      effective_date: new Date().toISOString().slice(0, 10),
-      updated_by: input.updatedBy,
-    }, { onConflict: 'branch_id,product_id,effective_date' })
+    .upsert(
+      {
+        branch_id: input.branchId,
+        product_id: input.productId,
+        stock_status: input.stockStatus,
+        available_quantity: input.availableQuantity ?? null,
+        effective_date: new Date().toISOString().slice(0, 10),
+        updated_by: input.updatedBy,
+      },
+      { onConflict: 'branch_id,product_id,effective_date' },
+    )
     .select('*')
     .single();
 
@@ -184,14 +217,17 @@ export async function upsertPrice(input: PriceUpdate) {
 
   const { data, error } = await supabase
     .from('price_snapshots')
-    .upsert({
-      branch_id: input.branchId,
-      product_id: input.productId,
-      price_per_unit: input.pricePerUnit,
-      effective_date: new Date().toISOString().slice(0, 10),
-      updated_by: input.updatedBy,
-      source: input.source ?? 'owner_update',
-    }, { onConflict: 'branch_id,product_id,effective_date' })
+    .upsert(
+      {
+        branch_id: input.branchId,
+        product_id: input.productId,
+        price_per_unit: input.pricePerUnit,
+        effective_date: new Date().toISOString().slice(0, 10),
+        updated_by: input.updatedBy,
+        source: input.source ?? 'owner_update',
+      },
+      { onConflict: 'branch_id,product_id,effective_date' },
+    )
     .select('*')
     .single();
 
