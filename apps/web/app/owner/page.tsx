@@ -1,4 +1,4 @@
-import { ownerMetrics, ownerOrders, subscriptionPlans, supportTickets } from '../../lib/data';
+ï»¿import { ownerMetrics, ownerOrders, subscriptionPlans, supportTickets } from '../../lib/data';
 
 export default function OwnerDashboardPage() {
   return (
@@ -27,11 +27,19 @@ export default function OwnerDashboardPage() {
 
       <section className="owner-layout">
         <div>
-          <div className="section-header"><div><p className="eyebrow">Order board</p><h2>Prep status and cut specifications</h2></div></div>
+          <div className="section-header">
+            <div>
+              <p className="eyebrow">Order board</p>
+              <h2>Prep status and cut specifications</h2>
+            </div>
+          </div>
           <div className="order-board">
             {ownerOrders.map((order) => (
               <article key={order.id} className="order-card">
-                <div className="order-topline"><strong>{order.id}</strong><span className={`prep-pill ${order.status}`}>{order.status.replace(/-/g, ' ')}</span></div>
+                <div className="order-topline">
+                  <strong>{order.id}</strong>
+                  <span className={`prep-pill ${order.status}`}>{order.status.replace(/-/g, ' ')}</span>
+                </div>
                 <h3>{order.customer}</h3>
                 <p>{order.itemSummary}</p>
                 <p>{order.schedule}</p>
@@ -45,12 +53,27 @@ export default function OwnerDashboardPage() {
           <section>
             <p className="eyebrow">Support</p>
             <h3>Tickets</h3>
-            <div className="ticket-list">{supportTickets.map((ticket) => (<div key={ticket.id} className="ticket-row"><strong>{ticket.subject}</strong><span>{ticket.priority} priority • {ticket.status}</span></div>))}</div>
+            <div className="ticket-list">
+              {supportTickets.map((ticket) => (
+                <div key={ticket.id} className="ticket-row">
+                  <strong>{ticket.subject}</strong>
+                  <span>{ticket.priority} priority | {ticket.status}</span>
+                </div>
+              ))}
+            </div>
           </section>
           <section>
             <p className="eyebrow">Billing</p>
             <h3>Stripe-ready SaaS plans</h3>
-            <div className="plan-stack">{subscriptionPlans.map((plan) => (<div key={plan.name} className="plan-card"><strong>{plan.name}</strong><span>{plan.price}</span><p>{plan.seats}</p></div>))}</div>
+            <div className="plan-stack">
+              {subscriptionPlans.map((plan) => (
+                <div key={plan.name} className="plan-card">
+                  <strong>{plan.name}</strong>
+                  <span>{plan.price}</span>
+                  <p>{plan.seats}</p>
+                </div>
+              ))}
+            </div>
           </section>
         </aside>
       </section>
