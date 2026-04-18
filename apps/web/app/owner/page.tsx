@@ -1,7 +1,8 @@
-﻿import { getOwnerDashboardData } from '../../lib/server-data';
+﻿import { OwnerOperationsForms } from '../../components/OwnerOperationsForms';
+import { getOwnerDashboardData } from '../../lib/server-data';
 
 export default async function OwnerDashboardPage() {
-  const { session, metrics, orders, tickets, plans, quotes } = await getOwnerDashboardData();
+  const { session, metrics, orders, tickets, plans, quotes, products, ownerUserId } = await getOwnerDashboardData();
 
   return (
     <main className="dashboard-page">
@@ -28,6 +29,8 @@ export default async function OwnerDashboardPage() {
           </article>
         ))}
       </section>
+
+      <OwnerOperationsForms ownerUserId={ownerUserId} products={products} />
 
       <section className="owner-layout">
         <div>

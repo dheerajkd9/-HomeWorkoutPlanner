@@ -1,9 +1,10 @@
-﻿export type Category = {
+export type Category = {
   id: string;
   name: string;
   slug: string;
   description: string;
   badge: string;
+  icon: string;
 };
 
 export type AreaOption = {
@@ -57,6 +58,9 @@ export type StoreSummary = {
   deliveryVendors: DeliveryVendor[];
   prices: PriceEntry[];
   orderModes: string[];
+  addressLine?: string;
+  sourceLabel?: string;
+  sourceUrl?: string;
 };
 
 export type Review = {

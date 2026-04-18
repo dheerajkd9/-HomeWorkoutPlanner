@@ -19,6 +19,27 @@ type OrderInsert = {
   }>;
 };
 
+type StoreOnboardingInput = {
+  ownerUserId: string;
+  organizationName: string;
+  storeName: string;
+  slug: string;
+  area: string;
+  addressLine: string;
+  phone?: string | null;
+  description?: string | null;
+};
+
+type BranchCreateInput = {
+  storeId: string;
+  name: string;
+  area: string;
+  addressLine: string;
+  serviceRadiusKm: number;
+  acceptsDelivery: boolean;
+  acceptsPickup: boolean;
+};
+
 type InventoryUpdate = {
   branchId: string;
   productId: string;
@@ -94,6 +115,83 @@ export async function getStore(slug: string) {
   } catch {
     return fallback;
   }
+}
+
+export async function onboardStore(input: StoreOnboardingInput) {
+  const supabase = createSupabaseAdminClient();
+  if (!supabase) {
+    return {
+      organization: { id: `org-${Date.now()}`, name: input.organizationName },
+      store: { id: `store-${Date.now()}`, name: input.storeName, slug: input.slug, area: input.area },
+    };
+  }
+
+  const { data: organization, error: orgError } = await supabase
+    .from('organizations')
+    .insert({
+      name: input.organizationName,
+      owner_user_id: input.ownerUserId,
+      city: 'Hyderabad',
+      subscription_status: 'trial',
+    })
+    .select('*')
+    .single();
+  if (orgError) throw orgError;
+
+  const { error: membershipError } = await supabase.from('organization_memberships').insert({
+    organization_id: organization.id,
+    user_id: input.ownerUserId,
+    role: 'store_owner',
+  });
+  if (membershipError) throw membershipError;
+
+  const { data: store, error: storeError } = await supabase
+    .from('stores')
+    .insert({
+      organization_id: organization.id,
+      name: input.storeName,
+      slug: input.slug,
+      area: input.area,
+      address_line: input.addressLine,
+      phone: input.phone ?? null,
+      description: input.description ?? null,
+      city: 'Hyderabad',
+      is_active: true,
+    })
+    .select('*')
+    .single();
+  if (storeError) throw storeError;
+
+  return { organization, store };
+}
+
+export async function createBranch(input: BranchCreateInput) {
+  const supabase = createSupabaseAdminClient();
+  if (!supabase) {
+    return {
+      id: `branch-${Date.now()}`,
+      store_id: input.storeId,
+      name: input.name,
+      area: input.area,
+    };
+  }
+
+  const { data, error } = await supabase
+    .from('store_branches')
+    .insert({
+      store_id: input.storeId,
+      name: input.name,
+      area: input.area,
+      address_line: input.addressLine,
+      service_radius_km: input.serviceRadiusKm,
+      accepts_delivery: input.acceptsDelivery,
+      accepts_pickup: input.acceptsPickup,
+      is_active: true,
+    })
+    .select('*')
+    .single();
+  if (error) throw error;
+  return data;
 }
 
 export async function createOrder(input: OrderInsert) {

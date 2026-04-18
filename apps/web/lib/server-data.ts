@@ -1,4 +1,4 @@
-﻿import { customerMetrics, customerOrders, customerSavedStores, ownerMetrics, ownerOrders, stores, subscriptionPlans, supportTickets } from './data';
+﻿import { categories, customerMetrics, customerOrders, customerSavedStores, ownerMetrics, ownerOrders, stores, subscriptionPlans, supportTickets } from './data';
 import { getCurrentSession } from './auth/session';
 import { fetchLiveMarketFeed } from './integrations/live-feed';
 import { getDeliveryQuotes } from './integrations/delivery';
@@ -43,6 +43,12 @@ export async function getOwnerDashboardData() {
     tickets: supportTickets,
     plans: subscriptionPlans,
     quotes: await getDeliveryQuotes({ area: 'HITEC City', storeName: 'Store ERP', orderValue: 1000 }).catch(() => []),
+    products: categories.map((category) => ({
+      id: category.id,
+      name: category.name,
+      unit: category.slug === 'eggs' ? 'tray' : category.slug === 'spreads-pickles' ? 'jar' : 'kg',
+    })),
+    ownerUserId: session?.user.id ?? 'demo-owner-user',
   };
 }
 

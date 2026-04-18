@@ -1,4 +1,4 @@
-﻿import { notFound } from 'next/navigation';
+import { notFound } from 'next/navigation';
 import { MarketplaceContent } from '../../../components/MarketplaceContent';
 import { getCategoryBySlug } from '../../../lib/data';
 
@@ -7,7 +7,7 @@ export default async function CategoryPage({
   searchParams,
 }: {
   params: { slug: string };
-  searchParams?: { area?: string };
+  searchParams?: { area?: string; lang?: string };
 }) {
   if (!getCategoryBySlug(params.slug)) {
     notFound();
@@ -16,7 +16,8 @@ export default async function CategoryPage({
   return (
     <MarketplaceContent
       categorySlug={params.slug}
-      selectedArea={searchParams?.area ?? 'All Hyderabad'}
+      selectedArea={searchParams?.area ?? 'Kompally'}
+      selectedLang={searchParams?.lang ?? 'en'}
       currentPath={`/category/${params.slug}`}
     />
   );

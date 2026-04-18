@@ -1,64 +1,82 @@
-﻿import Link from 'next/link';
-import { categories } from '../lib/data';
+import Link from 'next/link';
+import { categories, getAreaOptions } from '../lib/data';
+import { categoryLabels, normalizeLang, uiCopy } from '../lib/ui-copy';
 
 type Props = {
   activeCategorySlug: string;
   currentPath: string;
   selectedArea: string;
+  selectedLang?: string;
 };
 
-export function MarketShell({ children, activeCategorySlug, currentPath, selectedArea }: Props & { children: React.ReactNode }) {
-  const areaQuery = selectedArea && selectedArea !== 'All Hyderabad' ? `?area=${encodeURIComponent(selectedArea)}` : '';
+function buildQuery(selectedArea: string, lang: 'en' | 'te') {
+  const params = new URLSearchParams();
+  if (selectedArea && selectedArea !== 'All Hyderabad') {
+    params.set('area', selectedArea);
+  }
+  if (lang !== 'en') {
+    params.set('lang', lang);
+  }
+  const query = params.toString();
+  return query ? `?${query}` : '';
+}
+
+export function MarketShell({ children, activeCategorySlug, currentPath, selectedArea, selectedLang }: Props & { children: React.ReactNode }) {
+  const lang = normalizeLang(selectedLang);
+  const copy = uiCopy[lang];
+  const areas = getAreaOptions();
+  const sharedQuery = buildQuery(selectedArea, lang);
 
   return (
     <div className="page-shell">
-      <div className="utility-bar">
-        <span>Download App</span>
-        <span>FSSC 22000 Certification</span>
-        <span>Store ERP</span>
-        <span>Bulk orders</span>
-        <span>1800-4190-786</span>
-      </div>
-      <header className="top-header top-header-wide">
-        <Link href="/" className="brand-mark" aria-label="Hyderabad Meat Marketplace">
-          logo
-        </Link>
-        <form action={currentPath} className="location-form">
-          <label className="location-label">Find stores by Hyderabad area</label>
-          <div className="location-controls">
-            <select name="area" defaultValue={selectedArea} className="location-select">
-              <option>All Hyderabad</option>
-              <option>HITEC City</option>
-              <option>Madhapur</option>
-              <option>Gachibowli</option>
-              <option>Kondapur</option>
-              <option>Jubilee Hills</option>
-              <option>Banjara Hills</option>
-              <option>Mehdipatnam</option>
-              <option>Kukatpally</option>
-              <option>Secunderabad</option>
-              <option>Dilsukhnagar</option>
-            </select>
-            <button className="action-button" type="submit">Update area</button>
-          </div>
-        </form>
-        <div className="top-actions top-actions-wide">
-          <input className="search-input" placeholder="Search stores, cuts, vendors" />
-          <Link href="/login/customer" className="header-link">Customer Login</Link>
-          <Link href="/login/store" className="header-link">Store Login</Link>
+      <div className="sticky-shell">
+        <div className="utility-bar">
+          {copy.utility.map((item) => (
+            <span key={item}>{item}</span>
+          ))}
         </div>
-      </header>
-      <nav className="category-nav" aria-label="Product categories">
-        {categories.map((item) => (
-          <Link
-            key={item.slug}
-            href={item.slug === 'chicken' ? `/${areaQuery}` : `/category/${item.slug}${areaQuery}`}
-            className={item.slug === activeCategorySlug ? 'category-chip active' : 'category-chip'}
-          >
-            {item.name}
+        <header className="top-header top-header-wide">
+          <Link href={`/${sharedQuery}`} className="brand-mark" aria-label="Hyderabad Meat Marketplace">
+            {copy.brand}
           </Link>
-        ))}
-      </nav>
+          <form action={currentPath} className="location-form">
+            <input type="hidden" name="lang" value={lang} />
+            <label className="location-label">{copy.locationLabel}</label>
+            <div className="location-controls">
+              <select name="area" defaultValue={selectedArea} className="location-select">
+                {areas.map((area) => (
+                  <option key={area.name} value={area.name}>{area.name}</option>
+                ))}
+              </select>
+              <button className="action-button" type="submit">{copy.updateArea}</button>
+            </div>
+          </form>
+          <div className="top-actions top-actions-wide">
+            <input className="search-input" placeholder={copy.searchPlaceholder} />
+            <div className="lang-toggle" aria-label="Language switcher">
+              <Link href={`${currentPath}${buildQuery(selectedArea, 'en')}`} className={lang === 'en' ? 'lang-chip active' : 'lang-chip'}>EN</Link>
+              <Link href={`${currentPath}${buildQuery(selectedArea, 'te')}`} className={lang === 'te' ? 'lang-chip active' : 'lang-chip'}>{uiCopy.te.languageNative}</Link>
+            </div>
+            <Link href="/login/customer" className="header-link">{copy.customerLogin}</Link>
+            <Link href="/login/store" className="header-link">{copy.storeLogin}</Link>
+          </div>
+        </header>
+        <nav className="category-nav" aria-label="Product categories">
+          {categories.map((item) => {
+            const hrefBase = item.slug === 'chicken' ? '/' : `/category/${item.slug}`;
+            return (
+              <Link
+                key={item.slug}
+                href={`${hrefBase}${buildQuery(selectedArea, lang)}`}
+                className={item.slug === activeCategorySlug ? 'category-chip active' : 'category-chip'}
+              >
+                <span aria-hidden="true">{item.icon}</span>
+                <span>{categoryLabels[lang][item.slug] ?? item.name}</span>
+              </Link>
+            );
+          })}
+        </nav>
+      </div>
       {children}
     </div>
   );
