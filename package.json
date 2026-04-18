@@ -1,0 +1,14 @@
+{
+  "name": "hyderabad-meat-marketplace",
+  "private": true,
+  "version": "0.1.0",
+  "workspaces": [
+    "apps/web",
+    "packages/*"
+  ],
+  "scripts": {
+    "dev": "npm run dev --workspace @meat-market/web",
+    "build": "npm run build --workspace @meat-market/web",
+    "lint": "npm run lint --workspace @meat-market/web"
+  }
+}

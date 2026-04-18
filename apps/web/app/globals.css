@@ -1,0 +1,96 @@
+:root {
+  --bg: #f3eee8;
+  --surface: #fffdf9;
+  --ink: #1f1b16;
+  --muted: #6a6257;
+  --line: rgba(31, 27, 22, 0.12);
+  --accent: #c63b22;
+  --accent-dark: #842414;
+  --green: #2f8a3d;
+}
+* { box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+body { margin: 0; font-family: var(--font-heading), sans-serif; background: linear-gradient(180deg, #f8f4ef 0%, #f1ebe2 100%); color: var(--ink); }
+button, input, a, code { font: inherit; }
+a { color: inherit; text-decoration: none; }
+.page-shell { min-height: 100vh; }
+.utility-bar { display: flex; justify-content: center; gap: 1.5rem; padding: 0.55rem 1rem; border-bottom: 1px solid var(--line); background: #f6f1eb; color: var(--muted); font-size: 0.78rem; }
+.top-header { display: grid; grid-template-columns: 120px minmax(0, 1fr) 320px; align-items: center; gap: 1rem; padding: 1rem 2rem; background: var(--surface); }
+.brand-mark { display: inline-flex; align-items: center; justify-content: center; width: 84px; height: 52px; border: 3px solid #121212; border-radius: 12px; font-size: 1.9rem; font-weight: 700; letter-spacing: -0.06em; background: white; }
+.availability-pill { justify-self: center; max-width: 380px; padding: 0.8rem 1.2rem; border: 2px solid var(--accent); border-radius: 999px; text-align: center; background: #fff7f3; color: var(--accent-dark); }
+.top-actions { display: flex; align-items: center; justify-content: flex-end; gap: 0.75rem; }
+.search-input, .action-button { height: 44px; border: 1px solid var(--line); border-radius: 10px; background: white; }
+.search-input { width: 100%; padding: 0 0.9rem; }
+.action-button { min-width: 82px; }
+.category-nav { display: flex; gap: 0.35rem; overflow-x: auto; padding: 0.5rem 2rem; background: #2c2a28; }
+.category-chip { border: 0; border-radius: 10px; background: transparent; color: #f5f1ea; padding: 0.7rem 1rem; white-space: nowrap; }
+.category-chip.active { background: var(--accent); }
+.market-layout { display: grid; grid-template-columns: 250px minmax(0, 1fr); gap: 1.4rem; padding: 1.4rem 1.5rem 3rem; }
+.filters-panel, .detail-sidebar section, .bulk-panel, .metric-card, .order-card, .admin-panel, .sms-card, .hero-sidecard, .plan-card { background: rgba(255, 253, 249, 0.86); backdrop-filter: blur(12px); border: 1px solid var(--line); border-radius: 18px; box-shadow: 0 14px 32px rgba(58, 44, 33, 0.06); }
+.filters-panel { position: sticky; top: 1rem; align-self: start; padding: 1rem; }
+.filter-group + .filter-group { margin-top: 1.5rem; }
+.filter-group h3, .catalog-item h3, .order-card h3, .detail-sidebar h3, .admin-panel h2, .plan-card strong { margin: 0 0 0.8rem; }
+.filter-list { display: grid; gap: 0.55rem; }
+.filter-item { display: flex; gap: 0.65rem; align-items: center; color: var(--muted); }
+.filter-item.active { color: var(--accent); font-weight: 600; }
+.market-main, .detail-page, .dashboard-page { display: grid; gap: 1.5rem; }
+.market-toolbar, .detail-hero, .dashboard-hero { display: grid; grid-template-columns: minmax(0, 1.4fr) minmax(280px, 0.8fr); gap: 1.2rem; align-items: end; }
+.result-count, .eyebrow, .mini-label, .store-meta, .store-badges, .list-headline, .product-row p, .detail-copy, .metric-card p, .metric-card span, .ticket-row span, .plan-card p, .admin-row span { color: var(--muted); }
+.eyebrow, .mini-label, .result-count { text-transform: uppercase; letter-spacing: 0.08em; font-size: 0.76rem; }
+.market-title, .detail-hero h1, .dashboard-hero h1 { margin: 0.35rem 0 0; font-size: clamp(2.3rem, 4vw, 4.6rem); line-height: 0.95; letter-spacing: -0.06em; }
+.toolbar-tags, .hero-facts, .cut-list, .cta-row { display: flex; flex-wrap: wrap; gap: 0.6rem; }
+.toolbar-tags span, .hero-facts span, .cut-list span, .primary-link, .secondary-link { display: inline-flex; align-items: center; justify-content: center; min-height: 40px; padding: 0.7rem 1rem; border-radius: 999px; }
+.toolbar-tags span, .hero-facts span, .cut-list span { background: rgba(255, 255, 255, 0.65); border: 1px solid var(--line); }
+.list-headline { display: grid; grid-template-columns: 1.4fr 1fr 0.45fr; padding: 0 0.4rem; font-size: 0.78rem; }
+.store-list, .product-list, .order-board, .ticket-list, .plan-stack, .review-stack, .admin-grid, .catalog-grid { display: grid; gap: 0.9rem; }
+.store-row, .product-row, .admin-row { display: grid; gap: 1rem; align-items: center; border-top: 1px solid var(--line); padding: 1rem 0.4rem; }
+.store-row { grid-template-columns: minmax(0, 1.25fr) minmax(280px, 0.9fr) 180px; }
+.store-name { font-size: 1.35rem; font-weight: 700; }
+.store-meta, .store-badges { display: flex; flex-wrap: wrap; gap: 0.8rem; margin-top: 0.45rem; font-size: 0.88rem; }
+.store-stat-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 0.8rem; }
+.store-stat-grid div, .product-price { display: grid; gap: 0.2rem; }
+.store-stat-grid strong, .product-price strong, .metric-card strong, .bulk-panel strong, .hero-sidecard strong, .admin-row strong, .ticket-row strong { font-size: 1.05rem; }
+.store-actions-col { display: grid; justify-items: end; gap: 0.8rem; }
+.maps-link { color: var(--green); font-size: 1.25rem; line-height: 1.1; text-align: right; }
+.prep-pill { display: inline-flex; align-items: center; border-radius: 999px; padding: 0.45rem 0.9rem; font-size: 0.82rem; text-transform: capitalize; background: #eae7e1; }
+.prep-pill.accepting, .prep-pill.ready { background: #e4f4e7; color: #1f6d30; }
+.prep-pill.busy, .prep-pill.preparing, .prep-pill.accepted { background: #fff1de; color: #a05d04; }
+.prep-pill.closing-soon, .prep-pill.out-for-delivery, .prep-pill.received { background: #f7e4df; color: #8d2f1b; }
+.split-section, .detail-grid, .owner-layout, .admin-grid { display: grid; gap: 1rem; }
+.split-section, .owner-layout { grid-template-columns: minmax(0, 1.1fr) 340px; }
+.bulk-panel, .sms-card, .hero-sidecard { padding: 1.15rem; display: grid; gap: 1rem; }
+.catalog-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+.catalog-item, .ticket-row, .plan-card, .admin-row { padding: 1rem 1.1rem; border-radius: 18px; background: rgba(255, 255, 255, 0.68); border: 1px solid var(--line); }
+.primary-link { background: var(--accent); color: white; }
+.secondary-link { border: 1px solid var(--line); background: white; }
+.detail-page, .dashboard-page { padding: 1.5rem; }
+.detail-grid { grid-template-columns: minmax(0, 1fr) 320px; }
+.section-header { display: flex; align-items: end; justify-content: space-between; gap: 1rem; margin-bottom: 0.9rem; }
+.product-row { grid-template-columns: minmax(0, 1fr) 170px; }
+.detail-sidebar { display: grid; gap: 1rem; }
+.detail-sidebar section { padding: 1rem; }
+.detail-sidebar ul { margin: 0; padding-left: 1rem; }
+.review-stack blockquote { margin: 0; padding: 0.9rem 0; border-top: 1px solid var(--line); }
+.review-stack footer { margin-top: 0.55rem; color: var(--muted); }
+.metrics-grid { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 0.9rem; }
+.metric-card, .order-card, .owner-sidebar section, .admin-panel { padding: 1rem; }
+.order-topline { display: flex; align-items: center; justify-content: space-between; gap: 0.8rem; margin-bottom: 1rem; }
+.owner-sidebar { display: grid; gap: 1rem; }
+.admin-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+code { font-family: var(--font-mono), monospace; font-size: 0.84rem; line-height: 1.6; }
+@media (max-width: 1080px) {
+  .top-header, .market-layout, .detail-grid, .split-section, .owner-layout, .dashboard-hero, .market-toolbar, .detail-hero, .admin-grid, .metrics-grid, .catalog-grid, .store-row { grid-template-columns: 1fr; }
+  .list-headline { display: none; }
+  .store-actions-col { justify-items: start; }
+  .maps-link { text-align: left; }
+  .filters-panel { position: static; }
+}
+@media (max-width: 720px) {
+  .utility-bar { display: none; }
+  .top-header { padding: 1rem; }
+  .category-nav, .market-layout, .detail-page, .dashboard-page { padding-left: 1rem; padding-right: 1rem; }
+  .top-actions { grid-column: 1 / -1; }
+  .availability-pill { justify-self: start; }
+  .market-title, .detail-hero h1, .dashboard-hero h1 { font-size: 2.35rem; }
+  .store-stat-grid { grid-template-columns: repeat(2, 1fr); }
+}

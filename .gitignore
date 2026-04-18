@@ -1,0 +1,12 @@
+node_modules
+.next
+dist
+.expo
+.turbo
+.DS_Store
+.env
+.env.local
+.vercel
+coverage
+package-lock.json
+__codex_write_test.txt
