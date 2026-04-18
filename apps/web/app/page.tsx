@@ -1,4 +1,4 @@
-﻿import Link from 'next/link';
+import Link from 'next/link';
 import { categories, stores } from '../lib/data';
 import { FiltersSidebar } from '../components/FiltersSidebar';
 import { MarketShell } from '../components/MarketShell';

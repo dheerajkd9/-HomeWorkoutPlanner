@@ -9,7 +9,7 @@ export function StoreRow({ store }: { store: StoreSummary }) {
         <div className="store-meta">
           <span>{store.hours}</span>
           <span>{store.area}</span>
-          <span>{store.specialties.join(' • ')}</span>
+          <span>{store.specialties.join(' | ')}</span>
         </div>
         <div className="store-badges">
           <span>{store.freshnessNote}</span>

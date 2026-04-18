@@ -1,4 +1,4 @@
-﻿import { ownerMetrics, ownerOrders, subscriptionPlans, supportTickets } from '../../lib/data';
+import { ownerMetrics, ownerOrders, subscriptionPlans, supportTickets } from '../../lib/data';
 
 export default function OwnerDashboardPage() {
   return (

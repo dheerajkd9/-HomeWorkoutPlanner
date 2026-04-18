@@ -1,4 +1,4 @@
-﻿import Link from 'next/link';
+import Link from 'next/link';
 import { notFound } from 'next/navigation';
 import { getStoreBySlug } from '../../../lib/data';
 import { MarketShell } from '../../../components/MarketShell';
