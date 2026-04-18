@@ -1,10 +1,11 @@
 ﻿import Link from 'next/link';
-import { getCategoryBySlug, getStoresForCategory } from '../lib/data';
+import { getCategoryBySlug } from '../lib/data';
+import { getMarketplaceData } from '../lib/server-data';
 import { FiltersSidebar } from './FiltersSidebar';
 import { MarketShell } from './MarketShell';
 import { MarketplaceTable } from './MarketplaceTable';
 
-export function MarketplaceContent({
+export async function MarketplaceContent({
   categorySlug,
   selectedArea,
   currentPath,
@@ -14,7 +15,7 @@ export function MarketplaceContent({
   currentPath: string;
 }) {
   const category = getCategoryBySlug(categorySlug);
-  const stores = getStoresForCategory(categorySlug, selectedArea);
+  const { stores, liveFeed } = await getMarketplaceData(categorySlug, selectedArea);
 
   if (!category) {
     return null;
@@ -41,8 +42,8 @@ export function MarketplaceContent({
                 <strong>{stores.length}</strong>
               </div>
               <div className="toolbar-card">
-                <span className="mini-label">SaaS workflow</span>
-                <strong>Customer, Store, Admin</strong>
+                <span className="mini-label">Live feed</span>
+                <strong>{liveFeed?.provider ?? 'fallback-seed-data'}</strong>
               </div>
             </div>
           </div>
@@ -53,7 +54,7 @@ export function MarketplaceContent({
             <Link href="/admin" className="secondary-link">Admin operations</Link>
           </div>
 
-          <MarketplaceTable stores={stores} categorySlug={categorySlug} />
+          <MarketplaceTable stores={stores as any} categorySlug={categorySlug} />
         </section>
       </main>
     </MarketShell>

@@ -2,7 +2,7 @@
 import { MarketplaceContent } from '../../../components/MarketplaceContent';
 import { getCategoryBySlug } from '../../../lib/data';
 
-export default function CategoryPage({
+export default async function CategoryPage({
   params,
   searchParams,
 }: {

@@ -1,22 +1,26 @@
-﻿import { ownerMetrics, ownerOrders, subscriptionPlans, supportTickets } from '../../lib/data';
+﻿import { getOwnerDashboardData } from '../../lib/server-data';
 
-export default function OwnerDashboardPage() {
+export default async function OwnerDashboardPage() {
+  const { session, metrics, orders, tickets, plans, quotes } = await getOwnerDashboardData();
+
   return (
     <main className="dashboard-page">
       <section className="dashboard-hero">
         <div>
           <p className="eyebrow">Store ERP workspace</p>
           <h1>Manage daily pricing, inventory, cut specs, staff, prep queues, billing, customer history, and support from one SaaS console.</h1>
-          <p>This is the operator-facing ERP layer for Hyderabad meat stores. Owners can update prices, assign orders, review bulk leads, and handle subscription billing in one place.</p>
+          <p>{session ? `Signed in as ${session.user.email}.` : 'Configure Supabase auth and organization membership to bind this ERP dashboard to a real store.'}</p>
         </div>
         <div className="sms-card">
-          <span className="mini-label">Daily update template</span>
-          <code>CHKN 299 STOCK HIGH CUTS curry,biryani | MUTTON 899 LIMITED | FISH 549 FRESH | PICKLE YES</code>
+          <span className="mini-label">Delivery quotes</span>
+          {quotes.map((quote: any) => (
+            <p key={quote.name}>{quote.name} | {quote.eta} | {quote.fee}</p>
+          ))}
         </div>
       </section>
 
       <section className="metrics-grid">
-        {ownerMetrics.map((metric) => (
+        {metrics.map((metric) => (
           <article key={metric.label} className="metric-card">
             <p>{metric.label}</p>
             <strong>{metric.value}</strong>
@@ -34,18 +38,18 @@ export default function OwnerDashboardPage() {
             </div>
           </div>
           <div className="order-board">
-            {ownerOrders.map((order) => (
+            {orders.map((order: any) => (
               <article key={order.id} className="order-card">
                 <div className="order-topline">
-                  <strong>{order.id}</strong>
-                  <span className={`prep-pill ${order.status}`}>{order.status.replace(/-/g, ' ')}</span>
+                  <strong>{order.order_number ?? order.id}</strong>
+                  <span className={`prep-pill ${String(order.status).replace(/_/g, '-')}`}>{String(order.status).replace(/_/g, ' ')}</span>
                 </div>
-                <h3>{order.customer}</h3>
-                <p>{order.itemSummary}</p>
-                <p>{order.schedule}</p>
-                <p>{order.cutSpec}</p>
-                <p>{order.deliveryVendor}</p>
-                <strong>{order.amount}</strong>
+                <h3>{order.customer ?? 'Customer order'}</h3>
+                <p>{order.itemSummary ?? 'DB-backed order'}</p>
+                <p>{order.schedule ?? order.scheduled_for ?? 'Immediate order'}</p>
+                <p>{order.cutSpec ?? 'Custom notes available in order items'}</p>
+                <p>{order.deliveryVendor ?? order.delivery_vendor ?? 'Store Fleet'}</p>
+                <strong>{order.amount ?? `INR ${order.total_amount ?? 0}`}</strong>
               </article>
             ))}
           </div>
@@ -55,7 +59,7 @@ export default function OwnerDashboardPage() {
             <p className="eyebrow">Support and billing</p>
             <h3>Tickets</h3>
             <div className="ticket-list">
-              {supportTickets.map((ticket) => (
+              {tickets.map((ticket) => (
                 <div key={ticket.id} className="ticket-row">
                   <strong>{ticket.subject}</strong>
                   <span>{ticket.priority} priority | {ticket.status}</span>
@@ -67,7 +71,7 @@ export default function OwnerDashboardPage() {
             <p className="eyebrow">Plans</p>
             <h3>Subscription tiers</h3>
             <div className="plan-stack">
-              {subscriptionPlans.map((plan) => (
+              {plans.map((plan) => (
                 <div key={plan.name} className="plan-card">
                   <strong>{plan.name}</strong>
                   <span>{plan.price}</span>

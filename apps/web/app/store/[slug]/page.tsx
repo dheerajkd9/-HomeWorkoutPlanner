@@ -1,10 +1,10 @@
 ﻿import Link from 'next/link';
 import { notFound } from 'next/navigation';
-import { getStoreBySlug } from '../../../lib/data';
 import { MarketShell } from '../../../components/MarketShell';
+import { getStorePageData } from '../../../lib/server-data';
 
-export default function StorePage({ params }: { params: { slug: string } }) {
-  const store = getStoreBySlug(params.slug);
+export default async function StorePage({ params }: { params: { slug: string } }) {
+  const store = await getStorePageData(params.slug);
 
   if (!store) {
     notFound();
@@ -15,18 +15,18 @@ export default function StorePage({ params }: { params: { slug: string } }) {
       <main className="detail-page">
         <section className="detail-hero">
           <div>
-            <p className="eyebrow">{store.area} | {store.zone}</p>
+            <p className="eyebrow">{store.area} | {store.zone ?? 'Hyderabad'}</p>
             <h1>{store.name}</h1>
-            <p className="detail-copy">{store.description}</p>
+            <p className="detail-copy">{store.description ?? 'DB-backed store detail page with pricing, cuts, and delivery modes.'}</p>
             <div className="hero-facts">
-              <span>Rating {store.rating.toFixed(1)}</span>
-              <span>{store.hours}</span>
-              <span>{store.orderModes.join(' | ')}</span>
+              <span>Rating {Number(store.rating ?? store.avg_rating ?? 4.5).toFixed(1)}</span>
+              <span>{store.hours ?? 'Open today'}</span>
+              <span>{Array.isArray(store.orderModes) ? store.orderModes.join(' | ') : 'Delivery | Pickup | Scheduled order'}</span>
             </div>
           </div>
           <div className="hero-sidecard">
             <p className="mini-label">Delivery vendors</p>
-            {store.deliveryVendors.map((vendor) => (
+            {(store.deliveryVendors ?? []).map((vendor: any) => (
               <strong key={vendor.name}>{vendor.name} - {vendor.eta}</strong>
             ))}
           </div>
@@ -42,21 +42,21 @@ export default function StorePage({ params }: { params: { slug: string } }) {
               <Link href="/login/customer" className="primary-link">Customer login</Link>
             </div>
             <div className="product-list">
-              {store.products.map((product) => (
+              {(store.products ?? []).map((product: any) => (
                 <article key={product.id} className="product-row">
                   <div>
                     <h3>{product.name}</h3>
                     <p>{product.notes || 'Store can accept custom prep instructions.'}</p>
                     <div className="cut-list">
-                      {product.cuts.map((cut) => (
+                      {(product.cuts ?? []).map((cut: string) => (
                         <span key={cut}>{cut}</span>
                       ))}
                     </div>
                   </div>
                   <div className="product-price">
-                    <strong>INR {product.price}</strong>
+                    <strong>INR {product.price ?? product.price_per_unit}</strong>
                     <span>per {product.unit}</span>
-                    <em>{product.availability}</em>
+                    <em>{product.availability ?? 'in-stock'}</em>
                   </div>
                 </article>
               ))}
@@ -68,26 +68,10 @@ export default function StorePage({ params }: { params: { slug: string } }) {
               <p className="eyebrow">Coverage</p>
               <h3>Service area</h3>
               <ul>
-                {store.serviceArea.map((area) => (
+                {(store.serviceArea ?? [store.area]).map((area: string) => (
                   <li key={area}>{area}</li>
                 ))}
               </ul>
-            </section>
-            <section>
-              <p className="eyebrow">Order channels</p>
-              <h3>Delivery and pickup</h3>
-              <p>{store.orderModes.join(', ')}</p>
-            </section>
-            <section>
-              <p className="eyebrow">Reviews</p>
-              <div className="review-stack">
-                {store.reviewsList.map((review) => (
-                  <blockquote key={review.id}>
-                    {review.quote}
-                    <footer>{review.author} - {review.rating}/5</footer>
-                  </blockquote>
-                ))}
-              </div>
             </section>
           </aside>
         </section>
