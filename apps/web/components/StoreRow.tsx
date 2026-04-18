@@ -1,7 +1,10 @@
 ﻿import Link from 'next/link';
 import type { StoreSummary } from '../lib/types';
+import { getPriceForCategory } from '../lib/data';
 
-export function StoreRow({ store }: { store: StoreSummary }) {
+export function StoreRow({ store, categorySlug = 'chicken' }: { store: StoreSummary; categorySlug?: string }) {
+  const price = getPriceForCategory(store, categorySlug);
+
   return (
     <article className="store-row">
       <div>
@@ -11,19 +14,15 @@ export function StoreRow({ store }: { store: StoreSummary }) {
           <span>{store.area}</span>
           <span>{store.specialties.join(' | ')}</span>
         </div>
-        <div className="store-badges">
-          <span>{store.freshnessNote}</span>
-          <span>{store.deliveryPartner}</span>
-        </div>
       </div>
       <div className="store-stat-grid">
-        <div><strong>{store.eta}</strong><span>Delivery time</span></div>
+        <div><strong>{store.eta}</strong><span>Live stats</span></div>
         <div><strong>{store.distanceKm} km</strong><span>Distance</span></div>
-        <div><strong>{store.rating.toFixed(1)}</strong><span>{store.reviews} reviews</span></div>
-        <div><strong>INR {store.todayPrice}</strong><span>Price / KG</span></div>
+        <div><strong>{store.rating.toFixed(1)}</strong><span>Review</span></div>
+        <div><strong>INR {price?.price ?? '--'}</strong><span>Price</span></div>
       </div>
       <div className="store-actions-col">
-        <a href={store.mapUrl} target="_blank" rel="noreferrer" className="maps-link">Google Maps Direction</a>
+        <a href={store.mapUrl} target="_blank" rel="noreferrer" className="maps-link">Maps</a>
         <span className={`prep-pill ${store.prepStatus}`}>{store.prepStatus.replace('-', ' ')}</span>
       </div>
     </article>

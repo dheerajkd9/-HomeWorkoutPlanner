@@ -1,17 +1,17 @@
-import { ownerMetrics, ownerOrders, subscriptionPlans, supportTickets } from '../../lib/data';
+﻿import { ownerMetrics, ownerOrders, subscriptionPlans, supportTickets } from '../../lib/data';
 
 export default function OwnerDashboardPage() {
   return (
     <main className="dashboard-page">
       <section className="dashboard-hero">
         <div>
-          <p className="eyebrow">Store owner workspace</p>
-          <h1>Update daily inventory, prep queues, tickets, and subscription billing from one screen.</h1>
-          <p>This dashboard is designed for store owners who want fast morning price publishing, customer order clarity, and a path to simple SaaS billing.</p>
+          <p className="eyebrow">Store ERP workspace</p>
+          <h1>Manage daily pricing, inventory, cut specs, staff, prep queues, billing, customer history, and support from one SaaS console.</h1>
+          <p>This is the operator-facing ERP layer for Hyderabad meat stores. Owners can update prices, assign orders, review bulk leads, and handle subscription billing in one place.</p>
         </div>
         <div className="sms-card">
-          <span className="mini-label">Daily SMS template</span>
-          <code>CHKN 299 STOCK HIGH CUTS curry,biryani | MUTTON 820 LIMITED | PICKLE YES</code>
+          <span className="mini-label">Daily update template</span>
+          <code>CHKN 299 STOCK HIGH CUTS curry,biryani | MUTTON 899 LIMITED | FISH 549 FRESH | PICKLE YES</code>
         </div>
       </section>
 
@@ -29,8 +29,8 @@ export default function OwnerDashboardPage() {
         <div>
           <div className="section-header">
             <div>
-              <p className="eyebrow">Order board</p>
-              <h2>Prep status and cut specifications</h2>
+              <p className="eyebrow">ERP order board</p>
+              <h2>Orders, prep status, cut specs, and delivery vendor assignment</h2>
             </div>
           </div>
           <div className="order-board">
@@ -44,6 +44,7 @@ export default function OwnerDashboardPage() {
                 <p>{order.itemSummary}</p>
                 <p>{order.schedule}</p>
                 <p>{order.cutSpec}</p>
+                <p>{order.deliveryVendor}</p>
                 <strong>{order.amount}</strong>
               </article>
             ))}
@@ -51,7 +52,7 @@ export default function OwnerDashboardPage() {
         </div>
         <aside className="owner-sidebar">
           <section>
-            <p className="eyebrow">Support</p>
+            <p className="eyebrow">Support and billing</p>
             <h3>Tickets</h3>
             <div className="ticket-list">
               {supportTickets.map((ticket) => (
@@ -63,8 +64,8 @@ export default function OwnerDashboardPage() {
             </div>
           </section>
           <section>
-            <p className="eyebrow">Billing</p>
-            <h3>Stripe-ready SaaS plans</h3>
+            <p className="eyebrow">Plans</p>
+            <h3>Subscription tiers</h3>
             <div className="plan-stack">
               {subscriptionPlans.map((plan) => (
                 <div key={plan.name} className="plan-card">

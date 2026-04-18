@@ -1,7 +1,28 @@
-export type Category = {
+﻿export type Category = {
   id: string;
   name: string;
+  slug: string;
   description: string;
+  badge: string;
+};
+
+export type AreaOption = {
+  name: string;
+  zone: string;
+};
+
+export type DeliveryVendor = {
+  name: string;
+  eta: string;
+  fee: string;
+  offer: string;
+  availability: 'available' | 'limited' | 'offline';
+};
+
+export type PriceEntry = {
+  categorySlug: string;
+  unit: string;
+  price: number;
 };
 
 export type Product = {
@@ -20,20 +41,22 @@ export type StoreSummary = {
   slug: string;
   name: string;
   area: string;
+  zone: string;
   hours: string;
   distanceKm: number;
   eta: string;
   rating: number;
   reviews: number;
-  todayPrice: number;
   mapUrl: string;
-  deliveryPartner: string;
   freshnessNote: string;
   specialties: string[];
   categories: string[];
   bulkOrders: boolean;
   picklesAvailable: boolean;
   prepStatus: 'accepting' | 'busy' | 'closing-soon';
+  deliveryVendors: DeliveryVendor[];
+  prices: PriceEntry[];
+  orderModes: string[];
 };
 
 export type Review = {
@@ -51,6 +74,29 @@ export type StoreDetail = StoreSummary & {
   reviewsList: Review[];
 };
 
+export type CustomerMetric = {
+  label: string;
+  value: string;
+  detail: string;
+};
+
+export type CustomerOrder = {
+  id: string;
+  storeName: string;
+  category: string;
+  total: string;
+  schedule: string;
+  status: string;
+  deliveryVendor: string;
+};
+
+export type CustomerSavedStore = {
+  storeName: string;
+  area: string;
+  bestFor: string;
+  priceNote: string;
+};
+
 export type OwnerMetric = {
   label: string;
   value: string;
@@ -65,6 +111,7 @@ export type OwnerOrder = {
   status: 'received' | 'accepted' | 'preparing' | 'ready' | 'out-for-delivery';
   amount: string;
   cutSpec: string;
+  deliveryVendor: string;
 };
 
 export type Ticket = {
@@ -79,4 +126,10 @@ export type SubscriptionPlan = {
   price: string;
   seats: string;
   features: string[];
+};
+
+export type AdminMetric = {
+  label: string;
+  value: string;
+  note: string;
 };

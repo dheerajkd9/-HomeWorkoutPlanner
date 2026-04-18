@@ -1,4 +1,4 @@
-import Link from 'next/link';
+﻿import Link from 'next/link';
 import { notFound } from 'next/navigation';
 import { getStoreBySlug } from '../../../lib/data';
 import { MarketShell } from '../../../components/MarketShell';
@@ -6,26 +6,28 @@ import { MarketShell } from '../../../components/MarketShell';
 export default function StorePage({ params }: { params: { slug: string } }) {
   const store = getStoreBySlug(params.slug);
 
-  if (!store) notFound();
+  if (!store) {
+    notFound();
+  }
 
   return (
-    <MarketShell>
+    <MarketShell activeCategorySlug="chicken" currentPath={`/store/${store.slug}`} selectedArea={store.area}>
       <main className="detail-page">
         <section className="detail-hero">
           <div>
-            <p className="eyebrow">{store.area}</p>
+            <p className="eyebrow">{store.area} | {store.zone}</p>
             <h1>{store.name}</h1>
             <p className="detail-copy">{store.description}</p>
             <div className="hero-facts">
               <span>Rating {store.rating.toFixed(1)}</span>
-              <span>INR {store.todayPrice} today</span>
-              <span>{store.eta}</span>
+              <span>{store.hours}</span>
+              <span>{store.orderModes.join(' | ')}</span>
             </div>
           </div>
           <div className="hero-sidecard">
-            <p className="mini-label">Delivery windows</p>
-            {store.deliveryWindows.map((window) => (
-              <strong key={window}>{window}</strong>
+            <p className="mini-label">Delivery vendors</p>
+            {store.deliveryVendors.map((vendor) => (
+              <strong key={vendor.name}>{vendor.name} - {vendor.eta}</strong>
             ))}
           </div>
         </section>
@@ -34,19 +36,17 @@ export default function StorePage({ params }: { params: { slug: string } }) {
           <div>
             <div className="section-header">
               <div>
-                <p className="eyebrow">Products</p>
-                <h2>Order with exact cutting instructions</h2>
+                <p className="eyebrow">Products and cuts</p>
+                <h2>Browse every category, cutting note, and daily price</h2>
               </div>
-              <Link href={store.mapUrl} target="_blank" className="secondary-link">
-                Open maps
-              </Link>
+              <Link href="/login/customer" className="primary-link">Customer login</Link>
             </div>
             <div className="product-list">
               {store.products.map((product) => (
                 <article key={product.id} className="product-row">
                   <div>
                     <h3>{product.name}</h3>
-                    <p>{product.notes || 'Cut instructions available at checkout.'}</p>
+                    <p>{product.notes || 'Store can accept custom prep instructions.'}</p>
                     <div className="cut-list">
                       {product.cuts.map((cut) => (
                         <span key={cut}>{cut}</span>
@@ -74,19 +74,17 @@ export default function StorePage({ params }: { params: { slug: string } }) {
               </ul>
             </section>
             <section>
-              <p className="eyebrow">Bulk</p>
-              <h3>Event order friendly</h3>
-              <p>{store.bulkOrders ? 'Bulk order intake is enabled for this store.' : 'Bulk ordering will be available soon.'}</p>
+              <p className="eyebrow">Order channels</p>
+              <h3>Delivery and pickup</h3>
+              <p>{store.orderModes.join(', ')}</p>
             </section>
             <section>
               <p className="eyebrow">Reviews</p>
               <div className="review-stack">
                 {store.reviewsList.map((review) => (
                   <blockquote key={review.id}>
-                    "{review.quote}"
-                    <footer>
-                      {review.author} - {review.rating}/5
-                    </footer>
+                    {review.quote}
+                    <footer>{review.author} - {review.rating}/5</footer>
                   </blockquote>
                 ))}
               </div>
