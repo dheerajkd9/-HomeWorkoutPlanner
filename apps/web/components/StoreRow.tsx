@@ -1,4 +1,4 @@
-import Link from 'next/link';
+﻿import Link from 'next/link';
 import type { StoreSummary } from '../lib/types';
 
 export function StoreRow({ store }: { store: StoreSummary }) {
