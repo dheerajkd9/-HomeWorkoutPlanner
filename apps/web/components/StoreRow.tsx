@@ -1,5 +1,5 @@
 import Link from 'next/link';
-import type { StoreSummary } from '@meat-market/shared';
+import type { StoreSummary } from '../lib/types';
 
 export function StoreRow({ store }: { store: StoreSummary }) {
   return (
