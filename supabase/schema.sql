@@ -1,4 +1,4 @@
-﻿create extension if not exists "uuid-ossp";
+create extension if not exists "uuid-ossp";
 
 create type public.app_role as enum ('platform_admin', 'store_owner', 'store_manager', 'customer');
 create type public.subscription_status as enum ('trial', 'active', 'past_due', 'cancelled');
@@ -271,9 +271,20 @@ alter table public.order_items enable row level security;
 alter table public.addresses enable row level security;
 alter table public.tickets enable row level security;
 
-create policy if not exists "profiles_self" on public.profiles for select using (auth.uid() = id);
-create policy if not exists "addresses_self" on public.addresses for all using (auth.uid() = user_id) with check (auth.uid() = user_id);
-create policy if not exists "orders_customer_read" on public.orders for select using (auth.uid() = customer_user_id);
-create policy if not exists "tickets_user_read" on public.tickets for select using (auth.uid() = user_id);
-create policy if not exists "stores_public_read" on public.stores for select using (is_active = true);
-create policy if not exists "branches_public_read" on public.store_branches for select using (is_active = true);
+drop policy if exists "profiles_self" on public.profiles;
+create policy "profiles_self" on public.profiles for select using (auth.uid() = id);
+
+drop policy if exists "addresses_self" on public.addresses;
+create policy "addresses_self" on public.addresses for all using (auth.uid() = user_id) with check (auth.uid() = user_id);
+
+drop policy if exists "orders_customer_read" on public.orders;
+create policy "orders_customer_read" on public.orders for select using (auth.uid() = customer_user_id);
+
+drop policy if exists "tickets_user_read" on public.tickets;
+create policy "tickets_user_read" on public.tickets for select using (auth.uid() = user_id);
+
+drop policy if exists "stores_public_read" on public.stores;
+create policy "stores_public_read" on public.stores for select using (is_active = true);
+
+drop policy if exists "branches_public_read" on public.store_branches;
+create policy "branches_public_read" on public.store_branches for select using (is_active = true);
