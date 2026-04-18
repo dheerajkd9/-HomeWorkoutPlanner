@@ -1,9 +1,9 @@
 ﻿import { NextRequest, NextResponse } from 'next/server';
-import { listStores } from '../../../lib/repositories/platform';
+import { fetchLiveMarketFeed } from '../../../../lib/integrations/live-feed';
 
 export async function GET(request: NextRequest) {
   const area = request.nextUrl.searchParams.get('area') ?? undefined;
   const category = request.nextUrl.searchParams.get('category') ?? undefined;
-  const stores = await listStores(category, area);
-  return NextResponse.json(stores);
+  const feed = await fetchLiveMarketFeed(area, category);
+  return NextResponse.json(feed);
 }

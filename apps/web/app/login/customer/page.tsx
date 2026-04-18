@@ -1,16 +1,29 @@
-﻿import Link from 'next/link';
-
-export default function CustomerLoginPage() {
+﻿export default function CustomerLoginPage({ searchParams }: { searchParams?: { error?: string; welcome?: string; demoAuth?: string } }) {
   return (
     <main className="auth-page">
       <section className="auth-card">
-        <p className="eyebrow">Customer login</p>
-        <h1>Sign in to manage orders, saved stores, delivery vendors, and subscriptions.</h1>
-        <div className="auth-form">
-          <input placeholder="Mobile number or email" />
-          <input placeholder="Password or OTP" />
-          <Link href="/customer" className="primary-link">Continue to customer dashboard</Link>
-          <p className="auth-note">Mock login flow for MVP UI. Connect Supabase Auth or Clerk next.</p>
+        <p className="eyebrow">Customer auth</p>
+        <h1>Register or sign in to place orders, manage delivery vendors, and track purchase history.</h1>
+        {searchParams?.error ? <p className="auth-error">{searchParams.error}</p> : null}
+        {searchParams?.welcome ? <p className="auth-success">Account created. Check your email if confirmation is enabled.</p> : null}
+        {searchParams?.demoAuth ? <p className="auth-note">Supabase auth is not configured yet, so the app redirected in demo mode.</p> : null}
+        <div className="auth-grid">
+          <form action="/api/auth/login" method="post" className="auth-form">
+            <input type="hidden" name="redirectTo" value="/customer" />
+            <h2>Sign in</h2>
+            <input name="email" type="email" placeholder="Email" required />
+            <input name="password" type="password" placeholder="Password" required />
+            <button className="primary-link" type="submit">Sign in as customer</button>
+          </form>
+          <form action="/api/auth/register" method="post" className="auth-form">
+            <input type="hidden" name="role" value="customer" />
+            <input type="hidden" name="redirectTo" value="/customer" />
+            <h2>Create account</h2>
+            <input name="fullName" placeholder="Full name" required />
+            <input name="email" type="email" placeholder="Email" required />
+            <input name="password" type="password" placeholder="Password" required />
+            <button className="secondary-link" type="submit">Register customer</button>
+          </form>
         </div>
       </section>
     </main>

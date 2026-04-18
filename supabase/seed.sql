@@ -1,11 +1,11 @@
-insert into categories (name, sort_order)
+﻿insert into public.categories (name, slug, sort_order)
 values
-  ('Chicken', 1),
-  ('Lamb & Goat', 2),
-  ('Fish & Seafood', 3),
-  ('Ready to Cook', 4),
-  ('Eggs', 5),
-  ('Spreads & Pickles', 6),
-  ('Cold Cuts', 7),
-  ('Exotic', 8)
-on conflict (name) do nothing;
+  ('Eid Specials', 'specials', 1),
+  ('Chicken', 'chicken', 2),
+  ('Lamb and Goat', 'lamb-goat', 3),
+  ('Fish and Seafood', 'fish-seafood', 4),
+  ('Ready to Cook', 'ready-to-cook', 5),
+  ('Eggs', 'eggs', 6),
+  ('Spreads and Pickles', 'spreads-pickles', 7),
+  ('Cold Cuts', 'cold-cuts', 8)
+on conflict (slug) do nothing;

@@ -276,3 +276,26 @@ code { font-family: var(--font-mono), monospace; font-size: 0.84rem; line-height
     justify-self: stretch;
   }
 }
+.auth-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 1rem;
+}
+.auth-error {
+  color: #9f2816;
+  font-weight: 600;
+}
+.auth-success {
+  color: #1f6d30;
+  font-weight: 600;
+}
+button.primary-link,
+button.secondary-link {
+  border: 0;
+  cursor: pointer;
+}
+@media (max-width: 900px) {
+  .auth-grid {
+    grid-template-columns: 1fr;
+  }
+}
