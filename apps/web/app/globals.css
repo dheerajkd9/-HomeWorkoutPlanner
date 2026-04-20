@@ -564,3 +564,701 @@ button.secondary-link {
     width: 100%;
   }
 }
+
+.fitflow-shell {
+  min-height: 100vh;
+  background:
+    radial-gradient(circle at top left, rgba(244, 109, 67, 0.18), transparent 28%),
+    radial-gradient(circle at 80% 10%, rgba(53, 131, 110, 0.18), transparent 25%),
+    linear-gradient(180deg, #fff8f1 0%, #f4efe7 48%, #f3efe9 100%);
+}
+
+.fitflow-hero,
+.fitflow-planner,
+.fitflow-feature-grid,
+.fitflow-proof-band {
+  width: min(1200px, calc(100% - 2.4rem));
+  margin: 0 auto;
+}
+
+.fitflow-hero {
+  padding: 1.4rem 0 2rem;
+}
+
+.fitflow-nav {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+}
+
+.fitflow-brand {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.9rem;
+}
+
+.fitflow-brand-mark {
+  width: 3.4rem;
+  height: 3.4rem;
+  display: inline-grid;
+  place-items: center;
+  border-radius: 1.1rem;
+  background: linear-gradient(135deg, #f04e23, #f8a05c);
+  color: white;
+  font-weight: 800;
+  letter-spacing: -0.08em;
+  box-shadow: 0 18px 40px rgba(240, 78, 35, 0.26);
+}
+
+.fitflow-brand p,
+.fitflow-brand span,
+.fitflow-stage-copy p,
+.fitflow-stage-copy span,
+.fitflow-routine-card p,
+.fitflow-feature-grid p,
+.fitflow-feature-grid span,
+.fitflow-proof-band span,
+.fitflow-proof-band strong,
+.fitflow-choice span,
+.fitflow-chip span,
+.fitflow-inline-choice span,
+.fitflow-plan-summary p,
+.fitflow-plan-footer p {
+  margin: 0;
+}
+
+.fitflow-brand p {
+  font-size: 1.05rem;
+  font-weight: 700;
+}
+
+.fitflow-brand span,
+.fitflow-nav-link,
+.fitflow-copy p,
+.fitflow-label,
+.fitflow-slider-wrap span,
+.fitflow-plan-summary p,
+.fitflow-stage-copy span,
+.fitflow-routine-card p,
+.fitflow-plan-footer p,
+.fitflow-feature-grid p,
+.fitflow-proof-band span {
+  color: #675f56;
+}
+
+.fitflow-nav-link,
+.fitflow-primary-cta,
+.fitflow-secondary-cta {
+  min-height: 46px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0 1.15rem;
+  border-radius: 999px;
+  transition: transform 180ms ease, box-shadow 180ms ease, background 180ms ease;
+}
+
+.fitflow-nav-link {
+  border: 1px solid rgba(32, 26, 22, 0.12);
+  background: rgba(255, 255, 255, 0.72);
+}
+
+.fitflow-nav-link:hover,
+.fitflow-primary-cta:hover,
+.fitflow-secondary-cta:hover,
+.fitflow-choice:hover,
+.fitflow-chip:hover,
+.fitflow-inline-choice:hover {
+  transform: translateY(-2px);
+}
+
+.fitflow-hero-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(320px, 460px);
+  gap: 2rem;
+  align-items: center;
+  padding: 3.8rem 0 2rem;
+}
+
+.fitflow-copy h1,
+.fitflow-section-heading h2,
+.fitflow-plan-summary h3,
+.fitflow-routine-card h4,
+.fitflow-feature-grid h3 {
+  margin: 0;
+  letter-spacing: -0.06em;
+}
+
+.fitflow-eyebrow,
+.fitflow-label,
+.fitflow-routine-topline p {
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  font-size: 0.75rem;
+}
+
+.fitflow-copy h1 {
+  max-width: 11ch;
+  font-size: clamp(3.4rem, 7vw, 6.8rem);
+  line-height: 0.94;
+  margin-top: 0.55rem;
+}
+
+.fitflow-copy p {
+  max-width: 42rem;
+  font-size: 1.06rem;
+  line-height: 1.7;
+  margin-top: 1.1rem;
+}
+
+.fitflow-cta-row,
+.fitflow-stat-row,
+.fitflow-summary-pills {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.9rem;
+}
+
+.fitflow-cta-row {
+  margin-top: 1.6rem;
+}
+
+.fitflow-primary-cta {
+  background: linear-gradient(135deg, #f04e23, #f4834f);
+  color: white;
+  box-shadow: 0 18px 34px rgba(240, 78, 35, 0.24);
+}
+
+.fitflow-secondary-cta {
+  border: 1px solid rgba(32, 26, 22, 0.12);
+  background: rgba(255, 255, 255, 0.7);
+}
+
+.fitflow-stat-row {
+  margin-top: 1.8rem;
+}
+
+.fitflow-stat-row div,
+.fitflow-proof-band div,
+.fitflow-feature-grid article {
+  display: grid;
+  gap: 0.4rem;
+}
+
+.fitflow-stat-row div {
+  min-width: 150px;
+}
+
+.fitflow-stat-row strong,
+.fitflow-proof-band strong {
+  font-size: 1.3rem;
+}
+
+.fitflow-stage {
+  position: relative;
+  min-height: 560px;
+  display: grid;
+  place-items: center;
+}
+
+.fitflow-stage-orbit {
+  position: absolute;
+  inset: auto;
+  border-radius: 999px;
+  border: 1px dashed rgba(32, 26, 22, 0.12);
+  animation: fitflowSpin 18s linear infinite;
+}
+
+.fitflow-stage-orbit-one {
+  width: 88%;
+  height: 88%;
+}
+
+.fitflow-stage-orbit-two {
+  width: 64%;
+  height: 64%;
+  animation-direction: reverse;
+}
+
+.fitflow-stage-card {
+  position: relative;
+  width: min(100%, 430px);
+  padding: 1.4rem;
+  border-radius: 2rem;
+  background: rgba(255, 253, 249, 0.8);
+  border: 1px solid rgba(32, 26, 22, 0.08);
+  box-shadow: 0 30px 80px rgba(48, 35, 22, 0.12);
+  backdrop-filter: blur(14px);
+}
+
+.fitflow-room {
+  position: relative;
+  height: 350px;
+  border-radius: 1.5rem;
+  overflow: hidden;
+  background:
+    radial-gradient(circle at top right, rgba(255, 255, 255, 0.95), transparent 28%),
+    linear-gradient(180deg, #eef6f1 0%, #f7ddc9 45%, #e1b184 100%);
+}
+
+.fitflow-sofa,
+.fitflow-chair,
+.fitflow-mat,
+.fitflow-avatar,
+.fitflow-head,
+.fitflow-arm,
+.fitflow-body,
+.fitflow-leg {
+  position: absolute;
+}
+
+.fitflow-sofa {
+  left: 1.25rem;
+  bottom: 4.6rem;
+  width: 10.5rem;
+  height: 5.5rem;
+  border-radius: 1.4rem 1.4rem 1rem 1rem;
+  background: linear-gradient(180deg, #4b7c72, #31574f);
+  box-shadow: 0 20px 40px rgba(35, 74, 65, 0.2);
+}
+
+.fitflow-sofa::before,
+.fitflow-sofa::after,
+.fitflow-chair::before,
+.fitflow-mat::before {
+  content: '';
+  position: absolute;
+}
+
+.fitflow-sofa::before {
+  inset: 0.9rem 0.8rem auto;
+  height: 2.1rem;
+  border-radius: 1rem;
+  background: rgba(255, 255, 255, 0.16);
+}
+
+.fitflow-sofa::after {
+  inset: auto 1rem -0.5rem;
+  height: 1rem;
+  border-radius: 999px;
+  background: rgba(34, 24, 18, 0.14);
+  filter: blur(6px);
+}
+
+.fitflow-chair {
+  right: 2rem;
+  bottom: 5.3rem;
+  width: 4.6rem;
+  height: 6rem;
+  border-radius: 1rem 1rem 0.8rem 0.8rem;
+  background: linear-gradient(180deg, #f17d4f, #d75831);
+}
+
+.fitflow-chair::before {
+  inset: auto 0.65rem -0.6rem;
+  height: 1.2rem;
+  border-radius: 999px;
+  background: rgba(34, 24, 18, 0.12);
+  filter: blur(5px);
+}
+
+.fitflow-mat {
+  left: 50%;
+  bottom: 2rem;
+  width: 13rem;
+  height: 4.2rem;
+  transform: translateX(-50%) skewX(-12deg);
+  border-radius: 999px;
+  background: linear-gradient(135deg, rgba(255, 245, 238, 0.95), rgba(255, 255, 255, 0.45));
+  border: 1px solid rgba(255, 255, 255, 0.44);
+}
+
+.fitflow-mat::before {
+  inset: auto 1rem -0.8rem;
+  height: 1.4rem;
+  border-radius: 999px;
+  background: rgba(34, 24, 18, 0.1);
+  filter: blur(8px);
+}
+
+.fitflow-avatar {
+  left: 53%;
+  bottom: 5.6rem;
+  width: 7rem;
+  height: 12rem;
+  transform: translateX(-50%);
+  animation: fitflowBounce 2.8s ease-in-out infinite;
+}
+
+.fitflow-head {
+  top: 0;
+  left: 2.25rem;
+  width: 2.5rem;
+  height: 2.5rem;
+  border-radius: 999px;
+  background: #1e1915;
+}
+
+.fitflow-body {
+  top: 2.2rem;
+  left: 2.4rem;
+  width: 2.2rem;
+  height: 4.4rem;
+  border-radius: 1.2rem;
+  background: linear-gradient(180deg, #fff3eb, #f17d4f);
+}
+
+.fitflow-arm,
+.fitflow-leg {
+  border-radius: 999px;
+  background: #1e1915;
+  transform-origin: top center;
+}
+
+.fitflow-arm {
+  top: 2.7rem;
+  width: 0.7rem;
+  height: 3.7rem;
+  animation: fitflowArms 1.4s ease-in-out infinite alternate;
+}
+
+.fitflow-arm-left {
+  left: 1.6rem;
+  transform: rotate(28deg);
+}
+
+.fitflow-arm-right {
+  right: 1.6rem;
+  transform: rotate(-28deg);
+}
+
+.fitflow-leg {
+  top: 6.1rem;
+  width: 0.8rem;
+  height: 4.8rem;
+  animation: fitflowLegs 1.4s ease-in-out infinite alternate;
+}
+
+.fitflow-leg-left {
+  left: 2.25rem;
+}
+
+.fitflow-leg-right {
+  right: 2.25rem;
+  animation-delay: 0.2s;
+}
+
+.fitflow-stage-copy {
+  display: grid;
+  gap: 0.55rem;
+  padding-top: 1rem;
+}
+
+.fitflow-stage-copy strong {
+  font-size: 1.3rem;
+  line-height: 1.2;
+}
+
+.fitflow-proof-band {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 1rem;
+  padding: 0 0 2.5rem;
+}
+
+.fitflow-proof-band div,
+.fitflow-controls,
+.fitflow-plan-panel,
+.fitflow-feature-grid article {
+  border: 1px solid rgba(32, 26, 22, 0.08);
+  background: rgba(255, 253, 249, 0.76);
+  box-shadow: 0 24px 60px rgba(48, 35, 22, 0.08);
+  backdrop-filter: blur(10px);
+}
+
+.fitflow-proof-band div {
+  padding: 1.25rem;
+  border-radius: 1.5rem;
+}
+
+.fitflow-planner {
+  padding: 2rem 0 1rem;
+}
+
+.fitflow-section-heading h2 {
+  max-width: 12ch;
+  font-size: clamp(2.3rem, 5vw, 4rem);
+  line-height: 1;
+  margin-top: 0.4rem;
+}
+
+.fitflow-planner-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1.05fr) minmax(320px, 0.95fr);
+  gap: 1.2rem;
+  margin-top: 1.4rem;
+}
+
+.fitflow-controls,
+.fitflow-plan-panel {
+  padding: 1.3rem;
+  border-radius: 1.9rem;
+}
+
+.fitflow-controls,
+.fitflow-control-block,
+.fitflow-stack,
+.fitflow-plan-panel,
+.fitflow-plan-summary,
+.fitflow-routine-list,
+.fitflow-plan-footer {
+  display: grid;
+  gap: 1rem;
+}
+
+.fitflow-option-grid,
+.fitflow-chip-grid,
+.fitflow-dual-grid,
+.fitflow-routine-list,
+.fitflow-feature-grid {
+  display: grid;
+  gap: 0.9rem;
+}
+
+.fitflow-option-grid {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+.fitflow-chip-grid {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+.fitflow-dual-grid {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+.fitflow-choice,
+.fitflow-chip,
+.fitflow-inline-choice {
+  width: 100%;
+  text-align: left;
+  border: 1px solid rgba(32, 26, 22, 0.08);
+  background: rgba(255, 255, 255, 0.82);
+  cursor: pointer;
+  transition: transform 180ms ease, border-color 180ms ease, background 180ms ease, box-shadow 180ms ease;
+}
+
+.fitflow-choice,
+.fitflow-chip {
+  padding: 1rem;
+  border-radius: 1.25rem;
+}
+
+.fitflow-inline-choice {
+  padding: 0.95rem 1rem;
+  border-radius: 1rem;
+}
+
+.fitflow-choice.is-active,
+.fitflow-chip.is-active,
+.fitflow-inline-choice.is-active {
+  border-color: rgba(240, 78, 35, 0.36);
+  background: linear-gradient(180deg, rgba(255, 245, 240, 0.98), rgba(255, 255, 255, 0.92));
+  box-shadow: 0 16px 26px rgba(240, 78, 35, 0.12);
+}
+
+.fitflow-choice strong,
+.fitflow-chip strong,
+.fitflow-inline-choice strong {
+  display: block;
+  margin-bottom: 0.3rem;
+}
+
+.fitflow-slider-wrap {
+  display: grid;
+  gap: 0.65rem;
+  margin-top: 0.3rem;
+}
+
+.fitflow-slider-wrap span {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+}
+
+.fitflow-slider-wrap input {
+  width: 100%;
+  accent-color: #f04e23;
+}
+
+.fitflow-plan-summary {
+  padding-bottom: 1rem;
+  border-bottom: 1px solid rgba(32, 26, 22, 0.08);
+}
+
+.fitflow-plan-summary h3 {
+  font-size: clamp(1.9rem, 3vw, 2.8rem);
+  line-height: 1;
+}
+
+.fitflow-summary-pills span {
+  min-height: 38px;
+  display: inline-flex;
+  align-items: center;
+  padding: 0 0.9rem;
+  border-radius: 999px;
+  background: rgba(255, 244, 238, 0.95);
+  color: #a14228;
+}
+
+.fitflow-routine-list {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+.fitflow-routine-card {
+  padding: 1rem;
+  border-radius: 1.25rem;
+  background: rgba(255, 255, 255, 0.86);
+  border: 1px solid rgba(32, 26, 22, 0.08);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.75);
+  animation: fitflowReveal 500ms ease both;
+}
+
+.fitflow-routine-card:nth-child(2) { animation-delay: 60ms; }
+.fitflow-routine-card:nth-child(3) { animation-delay: 120ms; }
+.fitflow-routine-card:nth-child(4) { animation-delay: 180ms; }
+.fitflow-routine-card:nth-child(5) { animation-delay: 240ms; }
+.fitflow-routine-card:nth-child(6) { animation-delay: 300ms; }
+
+.fitflow-routine-topline {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.8rem;
+  margin-bottom: 0.6rem;
+}
+
+.fitflow-routine-topline span {
+  font-size: 0.78rem;
+  font-weight: 700;
+  color: #a14228;
+}
+
+.fitflow-routine-card h4 {
+  font-size: 1.15rem;
+  margin-bottom: 0.5rem;
+}
+
+.fitflow-routine-card strong {
+  display: inline-flex;
+  margin-top: 0.7rem;
+  padding: 0.45rem 0.75rem;
+  border-radius: 999px;
+  background: #f5eee8;
+}
+
+.fitflow-plan-footer {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  padding-top: 0.4rem;
+  border-top: 1px solid rgba(32, 26, 22, 0.08);
+}
+
+.fitflow-feature-grid {
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  padding: 1rem 0 4rem;
+}
+
+.fitflow-feature-grid article {
+  padding: 1.35rem;
+  border-radius: 1.5rem;
+}
+
+.fitflow-feature-grid span {
+  font-size: 0.88rem;
+  font-weight: 700;
+  color: #a14228;
+}
+
+@keyframes fitflowSpin {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+@keyframes fitflowBounce {
+  0%, 100% { transform: translateX(-50%) translateY(0); }
+  50% { transform: translateX(-50%) translateY(-10px); }
+}
+
+@keyframes fitflowArms {
+  from { transform: rotate(24deg); }
+  to { transform: rotate(46deg); }
+}
+
+@keyframes fitflowLegs {
+  from { transform: rotate(-10deg); }
+  to { transform: rotate(16deg); }
+}
+
+@keyframes fitflowReveal {
+  from {
+    opacity: 0;
+    transform: translateY(12px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@media (max-width: 1080px) {
+  .fitflow-hero-grid,
+  .fitflow-proof-band,
+  .fitflow-planner-grid,
+  .fitflow-dual-grid,
+  .fitflow-plan-footer,
+  .fitflow-feature-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .fitflow-routine-list {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+@media (max-width: 720px) {
+  .fitflow-hero,
+  .fitflow-planner,
+  .fitflow-feature-grid,
+  .fitflow-proof-band {
+    width: min(100% - 1.2rem, 1200px);
+  }
+
+  .fitflow-nav,
+  .fitflow-cta-row,
+  .fitflow-stat-row,
+  .fitflow-summary-pills {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .fitflow-option-grid,
+  .fitflow-chip-grid,
+  .fitflow-routine-list {
+    grid-template-columns: 1fr;
+  }
+
+  .fitflow-copy h1,
+  .fitflow-section-heading h2 {
+    max-width: none;
+  }
+
+  .fitflow-stage {
+    min-height: 440px;
+  }
+
+  .fitflow-room {
+    height: 280px;
+  }
+}

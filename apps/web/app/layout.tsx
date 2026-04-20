@@ -6,8 +6,8 @@ const heading = Bricolage_Grotesque({ subsets: ['latin'], variable: '--font-head
 const mono = IBM_Plex_Mono({ subsets: ['latin'], weight: ['400', '500'], variable: '--font-mono' });
 
 export const metadata: Metadata = {
-  title: 'Hyderabad Meat Marketplace SaaS',
-  description: 'Marketplace and store-management SaaS for Hyderabad meat stores.',
+  title: 'FitFlow Home',
+  description: 'Animated AI workout planner for home exercise, pilates, privacy-friendly routines, and simple equipment.',
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {

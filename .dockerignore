@@ -1,0 +1,13 @@
+.git
+.gitignore
+.next
+node_modules
+apps/web/.next
+apps/web/node_modules
+packages/shared/node_modules
+npm-debug.log
+README.md
+SETUP_PLATFORM.md
+__codex_write_test.txt
+.env
+apps/web/.env.local

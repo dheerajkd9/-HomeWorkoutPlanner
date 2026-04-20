@@ -1,23 +1,43 @@
-# Hyderabad Meat Marketplace SaaS
+# FitFlow Home
 
-A web-first MVP starter for a Hyderabad-focused meat marketplace and store-operations platform.
+An animated AI-first home workout planner that turns a user's real setup, like a sofa, chair, bed, wall, small room, or outdoor walking space, into a practical exercise routine.
 
 ## What is included
 
-- `apps/web`: Next.js marketplace, store detail view, owner dashboard, admin console, and simple API routes
-- `packages/shared`: shared product, store, dashboard, and order seed data plus TypeScript types
-- `supabase/schema.sql`: PostgreSQL schema for a multi-tenant Supabase setup
-- `supabase/seed.sql`: starter Hyderabad categories and catalog seeds
+- `apps/web`: Next.js app with the animated home-workout planner and API routes
+- `packages/shared`: shared TypeScript workspace package
+- `Dockerfile`: multi-stage production container build
+- `docker-compose.yml`: one-command local or server deployment
+- `supabase/schema.sql`: PostgreSQL schema for the wider platform setup
+- `supabase/seed.sql`: starter seed data
 
-## Important assumption
+## Product idea
 
-The attached docs did not include the exact `insforge` API specification. This repo includes an adapter point for an external live market feed, but the current MVP uses store-owner daily updates as the source of truth for live prices until the exact API contract is shared.
+People often skip exercise because going to the gym takes time, costs money, or feels inconvenient after getting home. FitFlow Home removes that excuse by asking what is available around the user and building a realistic routine from it.
 
 ## Local setup
 
-1. `npm install --prefer-offline --workspace @meat-market/web --workspace @meat-market/shared`
+1. `npm install --workspace @meat-market/web --workspace @meat-market/shared`
 2. Copy `apps/web/.env.example` to `apps/web/.env.local`
 3. Run `npm run dev`
+
+## Docker deployment
+
+1. Copy `apps/web/.env.example` to `apps/web/.env.local`
+2. Build the image with `docker build -t fitflow-home .`
+3. Run the container with `docker run --env-file apps/web/.env.local -p 3000:3000 fitflow-home`
+
+You can also use Docker Compose:
+
+1. Copy `apps/web/.env.example` to `apps/web/.env.local`
+2. Run `docker compose up --build`
+
+## Container architecture
+
+- `deps` stage installs only the workspace packages needed by the web app
+- `builder` stage compiles the Next.js app in standalone mode
+- `runner` stage ships only the generated server bundle and static assets
+- `docker-compose.yml` provides a repeatable single-service deployment entry point
 
 ## Vercel deployment
 
@@ -28,4 +48,4 @@ The attached docs did not include the exact `insforge` API specification. This r
 
 ## Next phase
 
-After the web app is live, we can add the mobile app back in a separate pass without blocking deployment.
+After the app is live, we can add the camera-based exercise coach as the next AI layer without changing the core planning flow.

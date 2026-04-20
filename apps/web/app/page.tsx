@@ -1,5 +1,5 @@
-import { MarketplaceContent } from '../components/MarketplaceContent';
+import { HomeWorkoutPlanner } from '../components/HomeWorkoutPlanner';
 
-export default async function HomePage({ searchParams }: { searchParams?: { area?: string; lang?: string } }) {
-  return <MarketplaceContent categorySlug="chicken" selectedArea={searchParams?.area ?? 'Kompally'} selectedLang={searchParams?.lang ?? 'en'} currentPath="/" />;
+export default function HomePage() {
+  return <HomeWorkoutPlanner />;
 }
